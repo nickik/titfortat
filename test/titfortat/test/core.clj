@@ -8,20 +8,11 @@
 (deftest allvsall-test
   (is (= (allvsall [1 2 3]) [[1 1] [1 2] [1 3] [2 2] [2 3] [3 3]])))
 
-(deftest score-filter-test
-  (is (= (score-filter ["name" 5 "name" 6 "test" 9] "name")
-         '(("name" 5) ("name" 6)))))
-
-(deftest name-score-test'0
-  (is (= (name-score [["name" 5] ["name" 5]])
-         {"name" 10})))
-
 (deftest scoresort-test
-  (let [players [(nice. 0 [] "nice") (asshole. 0 [] "asshole")]
-        data    [["nice" 3 "nice" 3]
-                 ["nice" 0 "asshole" 5]
-                 ["asshole" 1 "asshole" 1]]]
-    (is (= (scoresort data  players) {"nice" 6, "asshole" 7}))))
+  (let [data  [["nice" 3 "nice" 3]
+               ["nice" 0 "asshole" 5]
+               ["asshole" 1 "asshole" 1]]]
+    (is (= (scoresort data) {"nice" 6, "asshole" 7}))))
 
 (deftest point-system-test
   (are [x y] (= x y)

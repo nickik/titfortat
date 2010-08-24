@@ -39,20 +39,8 @@
 
 (defn tournament [players rounds]
   (scoresort (map (fn [[p o]] (game p o rounds))
-                  (allvsall players))
-             players))
+                  (allvsall players))))
 
-(defn scoresort [scoredata players]
-  (apply merge
-         (map name-score
-            (map (partial score-filter scoredata) 
-                   (set (map :name players))))))
-
-(defn name-score [coll]
-  {(first (first coll))
-   (apply + (map (fn [[pname val]] val) coll))})
-
-(defn score-filter [scoredata index-name]
-    (filter
-     (fn [[name value]] (= name index-name))
-     (partition 2 (flatten scoredata))))
+(defn scoresort [scoredata]
+  (apply merge-with +
+         (map #(apply hash-map %) (partition 2 (flatten scoredata)))))
